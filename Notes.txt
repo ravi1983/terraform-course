@@ -1,0 +1,35 @@
+Terraform:
+    Infrastructure as code
+    Automation of infra
+    Keeps and maintains state of the infra
+    Makes the infra auditable, but checking in to git and doing peer review
+    While chef, puppet etc.,focus on installing and configuring the software, terraform creates the underlying infra in say AWS, Azure or other cloud providers
+    But works well with config software such as Chef, Puppet after infra is created.
+
+Installation:
+    Just unzip and add terraform binary to PATH
+
+Execution:
+    Run `terraform init` to download cloud provider details. This is needed for every new directory
+    Run `terraform apply` to proceed with creation of resources
+    Run `terraform destroy` all the resources created with apply command
+    Run `terraform plan` to understand what terraform will do on applying this config. This command does not create any resources.
+        Can add option -out <filename> to save the output of plan command to the specified file
+    To be safe, it is always recommended to do plan save the output to a file and then do apply on that file.
+        terraform plan <filename>; terraform apply <filename>
+
+Variables:
+    Everything in one file is not great.
+    Add AWS creds in a file that will be added to git repo is not good.
+    So we need to save the AWS creds in a separate file and not commit to git.
+    We can also define variables to make a template more generic. (e.g., make AMIs as variable since they change with each region)
+    Variables make template very generic and hence make it reusable
+    Syntax to refer variable in template is ${var.<variable name>} assuming the file that contains the variables in var.tf. Can also be referred like so var.<variable name>
+    In var.tf, we can either no assign any value to a variable or provide default values. Default values can be maps.
+    Use terraform.tfvard to provide values for all variables defined in var.tf. This file will be added to gitignore.
+    Can also split up the template further into provider.tf (refers to AWS variables) and instance.tf (mentions resources that need to be created)
+    In the end spliting config in following different templates is ideal:
+        terraform.tfvars - Will contains the AWS creds. DO NOT checkin
+        vars.tf - Will contain default vars, and empty declaration for vars that will be specified in terraform.tfvars
+        provider.tf - Will mention the cloud provider and creds to connect to them
+        instance.tf - Will specify the list of resources that need to be created

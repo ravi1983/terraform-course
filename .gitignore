@@ -3,3 +3,7 @@
 */terraform.tfstate.backup
 */.terraform
 */mykey*
+.idea
+.terraform
+terraform.tfvars
+terraform.tfstate*
