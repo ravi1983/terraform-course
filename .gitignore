@@ -7,3 +7,5 @@
 .terraform
 terraform.tfvars
 terraform.tfstate*
+demo-2/ravi/ssh-keys
+.terraform.*

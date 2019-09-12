@@ -33,3 +33,19 @@ Variables:
         vars.tf - Will contain default vars, and empty declaration for vars that will be specified in terraform.tfvars
         provider.tf - Will mention the cloud provider and creds to connect to them
         instance.tf - Will specify the list of resources that need to be created
+
+Provision Software:
+    Two way to provision software
+        1) Can create customer AMI and bundle software into this image. Can be done using packer.
+        2) Boot stnadard AMIs and install software on it. Can be done using file uploads, remote exec, or chef/puppet
+            Chef is integrated into terraform
+            Can do puppet commands using remote-exec
+
+            File uploads:
+             Use provisioner file to upload file. Can be in conjunction with remote-exec to execute a script
+             provisioner "file" {
+                source = "<source file name>"
+                destination = "<dest location>/<dest file name>"
+             }
+             Will SSH in lunux and WinRM on windows. Need to provide username/password via connection option.
+             But when using AWS we will be the keypair for connecting to the created instance
