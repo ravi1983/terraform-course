@@ -30,5 +30,6 @@ resource "aws_instance" "instance-with-nginx" {
     type = "ssh"
     user = var.INSTANCE_USER
     private_key = file(var.PRIVATE_KEY_LOC)
+    timeout = "20s"
   }
 }
