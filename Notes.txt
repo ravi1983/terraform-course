@@ -49,3 +49,14 @@ Provision Software:
              }
              Will SSH in lunux and WinRM on windows. Need to provide username/password via connection option.
              But when using AWS we will be the keypair for connecting to the created instance
+
+
+Outputting attributes:
+    Can used to print any attribute of the resource that was created
+    syntax is:
+        output <name> {
+            value = <resource_type>.<resource_name>.<attribute>
+        }
+    These attributes can be queried or outputted
+    These attributes can also be used in script!
+    very useful to start automation scripts after infra has been created
