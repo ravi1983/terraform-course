@@ -81,3 +81,17 @@ Remote state:
     When using s3 to store remote state, use aws configure to configure aws creds in local machine. Cannot use vars for backend since it is used before initialization (terraform init)
     Not all remotes backends support locking. Only s3 and consul support it.
     Can specify read-only remote state directly in .tf file (datasource)
+
+Datasource:
+    Provide dynamic information if available from provider
+    For e.g., terra exposes the same data available from AWS API (such as list of AMIs/AZs)
+    This can be used as input or filter in terraform (such as filter resources based on region)
+    Can filter by security group too
+
+Template provider
+    Help to create customized config files
+    Used to create generic template or init configs
+    e.g., Used to pass user-data that depends on other info in terraform. (user-data - used to pass commands that need to be executed by AWS)
+    How to create one?
+        Create a template file - shell script that needs arguments
+        template_file resource - This will load the template file and pass the necessary resource
