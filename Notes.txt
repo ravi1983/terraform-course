@@ -60,3 +60,24 @@ Outputting attributes:
     These attributes can be queried or outputted
     These attributes can also be used in script!
     very useful to start automation scripts after infra has been created
+
+Local state:
+    Keep track of remote state of infra using file called terraform.tfstate
+    Also keeps track of previous state using terraform.tfstate.backup
+    Whenever apply is executed new terraform.tfstate is created and terraform.tfstate.backup is overwritten
+    If remote state changes (say manually done out of terraform context), next apply is executed terraform will correct the infra based on the current state in  terraform.tfstate
+    Good idea to add the terraform.tfstate and terraform.tfstate.backup to git so the state can be version controlled and team can collaborate
+    local state id fine for smaller projection but for bigger projects we might want to store state in remote
+
+Remote state:
+    The state can be saved using backend functionality. Default is 'local backend' which uses the local state file which were covered in local state section
+    Other backends used to store state remote is s3 (with locking mechanism using DynamoDB), consul (with locking), and terraform enterprise.
+    Benefits:
+        Whole team refers a single copy of the state, ande coupled with locking we will not run into conflicts
+        Sensitive state data is not added to git.
+        Some enhanced backends allow remote operations (Apply executed remote not locally. So the infra can be created sooner, and we do not have to keep the local machine up and running.). Only Terraform enterprise can do this as of now
+        Everyone will always have latest version of state
+        Avoid commits and pushes of terraform.tfstate
+    When using s3 to store remote state, use aws configure to configure aws creds in local machine. Cannot use vars for backend since it is used before initialization (terraform init)
+    Not all remotes backends support locking. Only s3 and consul support it.
+    Can specify read-only remote state directly in .tf file (datasource)
