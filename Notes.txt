@@ -95,3 +95,25 @@ Template provider
     How to create one?
         Create a template file - shell script that needs arguments
         template_file resource - This will load the template file and pass the necessary resource
+
+Other providers
+    Terraform supports AWS, GCP, Azure, Digital Ocean, and can support any support any provider that expose API
+    The terraform script does not change between providers, only the underlying implementation changes
+
+Modules:
+    Can help make code organized and reuse (eg., code to create AWS VPC can be reused across regions)
+    Can also help with use of third party modules
+    Syntax:
+        module <module_name>{
+            source = <github or local folder loc>
+            <arg1> = <arg1_val>
+            <argn> = <argn_val>
+        }
+    Inside the module folder we will have the similar terraform files (vars, provider, instances etc.,)
+    value outputted from the module using the 'Outputting attributes' can be used in the main (caller) module using syntax ${module.<module_name>.<output_var_name>}
+
+Command overview:
+    Very focused on resource definitions
+    Has limited toolsets (more coming) to modify, import and create these resource definitions
+    terraform apply --> Apply states
+    terraform destroy --> Destroy states
