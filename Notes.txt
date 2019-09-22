@@ -115,8 +115,24 @@ Modules:
 Command overview:
     Very focused on resource definitions
     Has limited toolsets (more coming) to modify, import and create these resource definitions
+
     terraform apply --> Apply states
     terraform destroy --> Destroy states
+    terraform fmt --> Format the config files
+            get --> download/update modules
+            graph --> visual representation of the config or execution plan
+            import ADDRESS ID --> Import the infra resource identified with ID and import it into terraform.tfstate with resource id ADDRESS.
+                                    Useful to import *existing* infra into terraform state. Still need to create resource defs for existing infra before doing the import.
+            output --> Output any of the resource
+            plan --> shows changes to be made
+            push --> Pushes changes to Atlas (Hashicorp's enterprise tool) that can run terraform from centralized server
+            refresh --> Find diff with state file and remote state, and refresh infra
+            remote --> configure remote state storage
+            show --> display human readable state file data
+            state --> Advanced state management (e.g., rename resource)
+            taint --> Manually mark resource as tainted, and will be destroyed and recreated on next apply
+            validate --> Validate the terraform syntax
+            untaint --> undo the taint
 
 Interpolation:
     Refers to using of ${} to refer a value
@@ -145,5 +161,3 @@ Packer:
     Workflow:
         Build code --> Use packer to create AMI (with needed software & built code) --> Do terraform apply using the new AMI created by packer
     Ideally store the store terraform state in remote location.
-
-
