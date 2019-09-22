@@ -117,3 +117,33 @@ Command overview:
     Has limited toolsets (more coming) to modify, import and create these resource definitions
     terraform apply --> Apply states
     terraform destroy --> Destroy states
+
+Interpolation:
+    Refers to using of ${} to refer a value
+        can be a variable. Type can be string, map or list.
+        or a resource ${aws_instance.<name>.id}
+        or a datasource
+
+Conditionals:
+    Conditionally assign value
+    Syntax: <condition> ? <value 1> : <value 2>
+    Can also do !=, ==, >, < >=, <=, &&, ||
+
+Functions:
+    Syntax - ${<function>(arg1, arg2.... argn)}
+    We can do 'terraform console' to get into a REPL like env where we can execute terraform commands
+
+Project structure:
+    Isolate dev and Prod environments completely, but creating separate accounts for Dev, Prod and Billing
+    Split terraform into multiple projects (modules) will reduce the resources needed to manage in a single terraform apply
+    When apply is done for dev or prod accounts, respective AWS creds need to be used
+
+Packer:
+    CLI Tool to create AWS AMIs based on templates
+    Instead of creating instance, run shell script to install in it, we can create AMIs which have the software baked in it.
+    Common approach when using terraform for horizontally scaled app layer or cluster
+    Workflow:
+        Build code --> Use packer to create AMI (with needed software & built code) --> Do terraform apply using the new AMI created by packer
+    Ideally store the store terraform state in remote location.
+
+
